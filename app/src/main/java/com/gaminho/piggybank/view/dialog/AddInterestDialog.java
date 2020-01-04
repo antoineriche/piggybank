@@ -1,6 +1,7 @@
 package com.gaminho.piggybank.view.dialog;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +13,10 @@ import com.gaminho.piggybank.model.Interest;
 import com.gaminho.piggybank.util.DateUtils;
 import com.gaminho.piggybank.util.ViewUtils;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Locale;
 
 import io.realm.Realm;
 import io.realm.exceptions.RealmPrimaryKeyConstraintException;
@@ -21,9 +25,10 @@ public class AddInterestDialog {
 
     private Context mContext;
     private Account mAccount;
+    private LocalDate mLocalDate = null;
     private AddInterestDialogListener mListener;
 
-    private EditText mETInterestAmount, mETInterestAccountAmount;
+    private EditText mETInterestAmount, mETInterestAccountAmount, mETInterestDate;
 
     public AddInterestDialog(Context context, Account account, AddInterestDialogListener listener) {
         this.mContext = context;
@@ -35,6 +40,10 @@ public class AddInterestDialog {
         final LayoutInflater factory = LayoutInflater.from(mContext);
         final View view = factory.inflate(R.layout.dialog_add_interest, null);
         mETInterestAmount = view.findViewById(R.id.et_interest_amount);
+        mETInterestDate = view.findViewById(R.id.et_interest_date);
+
+        Locale.setDefault(Locale.FRANCE);
+        view.findViewById(R.id.btn_interest_date).setOnClickListener(v -> pickDate(Calendar.getInstance(Locale.FRANCE)));
         mETInterestAccountAmount = view.findViewById(R.id.et_interest_new_account_amount);
 
         return new AlertDialog.Builder(mContext)
@@ -45,6 +54,20 @@ public class AddInterestDialog {
                 .create();
     }
 
+    private void pickDate(final Calendar calendar) {
+        new DatePickerDialog(mContext, (datePicker, year, monthOfYear, dayOfMonth) -> {
+            Calendar calendar1 = Calendar.getInstance(Locale.FRANCE);
+            calendar1.set(Calendar.YEAR, year);
+            calendar1.set(Calendar.MONTH, monthOfYear);
+            calendar1.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            mLocalDate = DateUtils.toLocalDate(calendar1.getTime());
+            mETInterestDate.setText(String.format(Locale.FRANCE,
+                    "%02d/%02d/%04d", mLocalDate.getDayOfMonth(), mLocalDate.getMonthValue(),
+                    mLocalDate.getYear()));
+        }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
+
+    }
+
     public void show() {
         AlertDialog alertDialog = build();
         alertDialog.show();
@@ -52,7 +75,8 @@ public class AddInterestDialog {
 
         alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
             if (ViewUtils.isEditTextFilled(mETInterestAmount)
-                    && ViewUtils.isEditTextFilled(mETInterestAccountAmount)) {
+                    && ViewUtils.isEditTextFilled(mETInterestAccountAmount)
+                    && null != mLocalDate) {
                 addInterest(alertDialog);
             } else {
                 mListener.onAddingInterestFailure("Some info are missing");
@@ -76,7 +100,7 @@ public class AddInterestDialog {
                     interest.setAmount(Double.parseDouble(mETInterestAmount.getText().toString()));
                     interest.setAccount(mAccount);
                     interest.setAccountAmount(Double.parseDouble(mETInterestAccountAmount.getText().toString()));
-                    interest.setDate(LocalDateTime.now());
+                    interest.setDate(mLocalDate.atStartOfDay());
                     realm1.copyToRealm(interest);
                     mListener.onInterestAdded();
                 } catch (RealmPrimaryKeyConstraintException e) {

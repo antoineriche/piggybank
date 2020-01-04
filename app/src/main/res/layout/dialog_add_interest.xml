@@ -22,4 +22,30 @@
         android:inputType="numberDecimal"
         android:hint="Interest amount"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <EditText
+            android:id="@+id/et_interest_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="7"
+            android:enabled="false"
+            android:gravity="center"
+            android:hint="Interest date"/>
+
+        <Button
+            android:id="@+id/btn_interest_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="Pick"/>
+
+    </LinearLayout>
+
+
+
 </LinearLayout>

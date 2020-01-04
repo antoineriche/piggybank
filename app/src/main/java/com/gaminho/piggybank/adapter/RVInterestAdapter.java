@@ -64,7 +64,7 @@ public class RVInterestAdapter extends RecyclerView.Adapter<RVInterestAdapter.Vi
                 Locale.FRANCE, "%.02f€", mInterestList.get(position).getAmount()));
         final Date date = mInterestList.get(position).getDate();
         final String strDate = null != date ?
-                DateUtils.toLocalDateTime(date).format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"))
+                DateUtils.toLocalDateTime(date).format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
                 : "Last update: unknown";
         viewHolder.interestDate.setText(strDate);
         viewHolder.accountAmount.setText(String.format(
