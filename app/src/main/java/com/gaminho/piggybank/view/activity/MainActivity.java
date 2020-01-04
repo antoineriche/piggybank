@@ -11,14 +11,18 @@ import android.widget.Toast;
 import com.gaminho.piggybank.R;
 import com.gaminho.piggybank.adapter.RVAccountAdapter;
 import com.gaminho.piggybank.model.Account;
-import com.gaminho.piggybank.view.dialog.AddAccountDialog;
+import com.gaminho.piggybank.view.dialog.adding.AddAccountDialog;
+import com.gaminho.piggybank.view.dialog.adding.AddingDialog;
 
 import java.util.List;
 
 import io.realm.Realm;
 
+/*
+https://www.journaldev.com/23357/android-realm-database
+ */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,
-        AddAccountDialog.AddAccountDialogListener, RVAccountAdapter.OnAccountClickListener {
+        AddingDialog.AddingDialogListener<Account>, RVAccountAdapter.OnAccountClickListener {
 
     private RVAccountAdapter mAdapter;
 
@@ -160,17 +164,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-
-    @Override
-    public void onAccountAdded() {
-        mAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void onAddingAccountFailure(final String errorMsg) {
-        Toast.makeText(getApplicationContext(), "Error:\n" + errorMsg, Toast.LENGTH_SHORT).show();
-    }
-
     @Override
     public void onAccountClick(int position, View v) {
         final Intent intent = new Intent(this, AccountActivity.class);
@@ -181,5 +174,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onAccountLongClick(int position, View v) {
 
+    }
+
+    @Override
+    public void onItemAdded(Account item) {
+        this.mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onAddingItemFailed(String errorMsg) {
+        Toast.makeText(getApplicationContext(), "Error:\n" + errorMsg, Toast.LENGTH_SHORT).show();
     }
 }

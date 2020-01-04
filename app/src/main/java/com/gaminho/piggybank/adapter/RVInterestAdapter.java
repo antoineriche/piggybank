@@ -9,9 +9,9 @@ import android.widget.TextView;
 
 import com.gaminho.piggybank.R;
 import com.gaminho.piggybank.model.Interest;
-import com.gaminho.piggybank.util.DateUtils;
+import com.gaminho.piggybank.util.Format;
+import com.gaminho.piggybank.util.Formatter;
 
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -64,7 +64,7 @@ public class RVInterestAdapter extends RecyclerView.Adapter<RVInterestAdapter.Vi
                 Locale.FRANCE, "%.02f€", mInterestList.get(position).getAmount()));
         final Date date = mInterestList.get(position).getDate();
         final String strDate = null != date ?
-                DateUtils.toLocalDateTime(date).format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+                Formatter.dateToString(date, Format.DATE_DD_MM_YYYY)
                 : "Last update: unknown";
         viewHolder.interestDate.setText(strDate);
         viewHolder.accountAmount.setText(String.format(

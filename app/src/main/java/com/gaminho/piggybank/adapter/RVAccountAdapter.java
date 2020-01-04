@@ -9,9 +9,9 @@ import android.widget.TextView;
 
 import com.gaminho.piggybank.R;
 import com.gaminho.piggybank.model.Account;
-import com.gaminho.piggybank.util.DateUtils;
+import com.gaminho.piggybank.util.Format;
+import com.gaminho.piggybank.util.Formatter;
 
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -63,7 +63,7 @@ public class RVAccountAdapter extends RecyclerView.Adapter<RVAccountAdapter.View
         viewHolder.accountLabel.setText(mAccountList.get(position).getLabel());
         final Date date = mAccountList.get(position).getLastUpdate();
         final String strDate = null != date ?
-                DateUtils.toLocalDateTime(date).format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+                Formatter.dateToString(date, Format.DATE_DD_MM_YYYY)
                 : "Last update: unknown";
         viewHolder.accountLastUpdate.setText(strDate);
         viewHolder.accountAmount.setText(String.format(

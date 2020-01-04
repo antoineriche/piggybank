@@ -14,13 +14,15 @@ import com.gaminho.piggybank.R;
 import com.gaminho.piggybank.adapter.RVInterestAdapter;
 import com.gaminho.piggybank.model.Account;
 import com.gaminho.piggybank.model.Interest;
-import com.gaminho.piggybank.view.dialog.AddInterestDialog;
+import com.gaminho.piggybank.view.dialog.adding.AddInterestDialog;
+import com.gaminho.piggybank.view.dialog.adding.AddingDialog;
 
 import java.util.List;
 
 import io.realm.Realm;
 
-public class AccountActivity extends AppCompatActivity implements View.OnClickListener, RVInterestAdapter.OnInterestClickListener, AddInterestDialog.AddInterestDialogListener {
+public class AccountActivity extends AppCompatActivity implements View.OnClickListener,
+        RVInterestAdapter.OnInterestClickListener, AddingDialog.AddingDialogListener<Interest> {
 
     public static final String INTENT_ACCOUNT_UID_PARAM = "account-uid";
     private Account mAccount;
@@ -87,12 +89,12 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     @Override
-    public void onInterestAdded() {
-        mAdapter.notifyDataSetChanged();
+    public void onItemAdded(Interest item) {
+        this.mAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void onAddingInterestFailure(String errorMsg) {
+    public void onAddingItemFailed(String errorMsg) {
         Toast.makeText(getApplicationContext(), "Error:\n" + errorMsg, Toast.LENGTH_SHORT).show();
     }
 }
