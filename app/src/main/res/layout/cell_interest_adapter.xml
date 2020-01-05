@@ -37,16 +37,31 @@
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/cell_interest_amount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20dp"
-        android:layout_centerVertical="true"
-        android:layout_alignParentEnd="true"
-        android:textStyle="bold"
-        android:textColor="@color/colorPrimary"
-        android:text="0.86"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:gravity="end"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/cell_interest_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
+                android:text="+ 0.86"/>
+
+            <TextView
+                android:id="@+id/cell_interest_delta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+ 0.00"/>
+
+        </LinearLayout>
 
     </RelativeLayout>
 

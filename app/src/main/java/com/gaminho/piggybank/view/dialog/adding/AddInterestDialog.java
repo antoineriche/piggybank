@@ -23,7 +23,7 @@ import java.util.UUID;
 import io.realm.Realm;
 import io.realm.exceptions.RealmPrimaryKeyConstraintException;
 
-public class AddInterestDialog extends AddingDialog<Interest> {
+public final class AddInterestDialog extends AddingDialog<Interest> {
 
     private EditText mETInterestAmount, mETInterestAccountAmount, mETInterestDate;
     private LocalDate mLocalDate;

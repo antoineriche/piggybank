@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -25,7 +24,8 @@ import io.realm.Realm;
 import io.realm.Sort;
 
 public class AccountActivity extends AppCompatActivity implements View.OnClickListener,
-        RVInterestAdapter.OnInterestClickListener, AddingDialog.AddingDialogListener<Interest>, DeletingDialog.DeletingDialogListener {
+        RVInterestAdapter.OnInterestClickListener, AddingDialog.AddingDialogListener<Interest>,
+        DeletingDialog.DeletingDialogListener {
 
     public static final String INTENT_ACCOUNT_UID_PARAM = "account-uid";
     private Account mAccount;
@@ -49,7 +49,7 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
         final RecyclerView recyclerView = findViewById(R.id.rv_interests);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new RVInterestAdapter(mInterestList);
+        mAdapter = new RVInterestAdapter(this, mInterestList);
         mAdapter.setOnInterestClickListener(this);
         recyclerView.setAdapter(mAdapter);
     }

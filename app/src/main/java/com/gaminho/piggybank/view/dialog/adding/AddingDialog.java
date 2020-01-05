@@ -14,7 +14,7 @@ import io.realm.exceptions.RealmPrimaryKeyConstraintException;
 public abstract class AddingDialog<T extends RealmObject> {
 
     private Context mContext;
-    AddingDialogListener mListener;
+    AddingDialogListener<T> mListener;
 
     protected abstract boolean canAdd();
 
@@ -81,7 +81,7 @@ public abstract class AddingDialog<T extends RealmObject> {
 
     protected abstract T getItemFromViews();
 
-    public interface AddingDialogListener<T> {
+    public interface AddingDialogListener<T extends RealmObject> {
         void onItemAdded(T item);
 
         void onAddingItemFailed(final String errorMsg);

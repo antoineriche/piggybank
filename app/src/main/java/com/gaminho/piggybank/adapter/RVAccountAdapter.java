@@ -14,7 +14,6 @@ import com.gaminho.piggybank.util.Formatter;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 public class RVAccountAdapter extends RecyclerView.Adapter<RVAccountAdapter.ViewHolder> {
 
@@ -66,8 +65,8 @@ public class RVAccountAdapter extends RecyclerView.Adapter<RVAccountAdapter.View
                 Formatter.dateToString(date, Format.DATE_DD_MM_YYYY)
                 : "Last update: unknown";
         viewHolder.accountLastUpdate.setText(strDate);
-        viewHolder.accountAmount.setText(String.format(
-                Locale.FRANCE, "%.02f€", mAccountList.get(position).getAmount()));
+        viewHolder.accountAmount.setText(
+                Formatter.formatAmount(mAccountList.get(position).getAmount()));
     }
 
     @Override

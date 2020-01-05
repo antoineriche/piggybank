@@ -10,7 +10,7 @@ import com.gaminho.piggybank.util.ViewUtils;
 
 import java.util.UUID;
 
-public class AddAccountDialog extends AddingDialog<Account> {
+public final class AddAccountDialog extends AddingDialog<Account> {
 
     private EditText mETAccountLabel, mETAccountAmount;
 
