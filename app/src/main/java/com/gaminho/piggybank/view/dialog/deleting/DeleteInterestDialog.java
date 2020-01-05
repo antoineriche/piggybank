@@ -12,11 +12,6 @@ public final class DeleteInterestDialog extends DeletingDialog<Interest> {
     }
 
     @Override
-    protected int getTitleStringResId() {
-        return R.string.delete;
-    }
-
-    @Override
     protected int getMessageStringResId() {
         return R.string.delete_interest;
     }

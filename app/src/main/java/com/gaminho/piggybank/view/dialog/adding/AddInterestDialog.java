@@ -27,7 +27,7 @@ public final class AddInterestDialog extends AddingDialog<Interest> {
 
     private EditText mETInterestAmount, mETInterestAccountAmount, mETInterestDate;
     private LocalDate mLocalDate;
-    private Account mAccount;
+    private final Account mAccount;
 
     public AddInterestDialog(Context context, Account account, AddingDialogListener<Interest> listener) {
         super(context, listener);

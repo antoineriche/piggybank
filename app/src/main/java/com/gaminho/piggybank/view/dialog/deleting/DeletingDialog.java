@@ -11,9 +11,9 @@ import io.realm.exceptions.RealmPrimaryKeyConstraintException;
 
 public abstract class DeletingDialog<T extends RealmObject> {
 
-    private Context mContext;
-    DeletingDialogListener mListener;
-    T mItem;
+    private final Context mContext;
+    final DeletingDialogListener mListener;
+    final T mItem;
 
     DeletingDialog(T item, Context context, DeletingDialogListener listener) {
         this.mContext = context;
@@ -21,13 +21,12 @@ public abstract class DeletingDialog<T extends RealmObject> {
         this.mItem = item;
     }
 
-    protected abstract int getTitleStringResId();
     protected abstract int getMessageStringResId();
 
     private AlertDialog build() {
         return new AlertDialog.Builder(mContext)
                 .setMessage(getMessageStringResId())
-                .setTitle(getTitleStringResId())
+                .setTitle(R.string.delete)
                 .setNegativeButton(android.R.string.cancel, (dialogInterface, i) -> dialogInterface.dismiss())
                 .setPositiveButton(android.R.string.ok, null)
                 .create();
@@ -42,7 +41,7 @@ public abstract class DeletingDialog<T extends RealmObject> {
     }
 
 
-    protected void deleteItem(final AlertDialog alertDialog){
+    void deleteItem(final AlertDialog alertDialog){
         try (Realm realm = Realm.getDefaultInstance()) {
             realm.executeTransaction(realm1 -> {
                 try {
@@ -56,10 +55,6 @@ public abstract class DeletingDialog<T extends RealmObject> {
         } finally {
             alertDialog.dismiss();
         }
-    }
-
-    Context getContext() {
-        return mContext;
     }
 
     abstract String getKey();

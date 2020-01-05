@@ -1,7 +1,6 @@
 package com.gaminho.piggybank.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,9 +18,9 @@ import java.util.List;
 
 public class RVInterestAdapter extends RecyclerView.Adapter<RVInterestAdapter.ViewHolder> {
 
-    private List<Interest> mInterestList;
+    private final List<Interest> mInterestList;
     private static OnInterestClickListener clickListener;
-    private Context mContext;
+    private final Context mContext;
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         TextView interestAmount, interestDate, accountAmount, interestDelta;
@@ -92,10 +91,6 @@ public class RVInterestAdapter extends RecyclerView.Adapter<RVInterestAdapter.Vi
 
     public void setOnInterestClickListener(final OnInterestClickListener clickListener) {
         RVInterestAdapter.clickListener = clickListener;
-    }
-
-    public Interest getInterestAtPosition(final int position) {
-        return mInterestList.get(position);
     }
 
     private double getDelta(final int position) {

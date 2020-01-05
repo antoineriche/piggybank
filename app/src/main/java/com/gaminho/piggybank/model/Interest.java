@@ -35,14 +35,6 @@ public class Interest extends RealmObject {
     public Interest() {
     }
 
-    public Interest(String uid, double amount, double accountAmount, Account account, Date date) {
-        mUid = uid;
-        mAmount = amount;
-        mAccountAmount = accountAmount;
-        mAccount = account;
-        mDate = date;
-    }
-
     public String getUid() {
         return mUid;
     }

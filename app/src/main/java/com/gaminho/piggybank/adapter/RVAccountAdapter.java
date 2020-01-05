@@ -17,7 +17,7 @@ import java.util.List;
 
 public class RVAccountAdapter extends RecyclerView.Adapter<RVAccountAdapter.ViewHolder> {
 
-    private List<Account> mAccountList;
+    private final List<Account> mAccountList;
     private static OnAccountClickListener clickListener;
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {

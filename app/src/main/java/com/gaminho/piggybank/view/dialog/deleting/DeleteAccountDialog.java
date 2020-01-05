@@ -6,10 +6,6 @@ import android.content.Context;
 import com.gaminho.piggybank.R;
 import com.gaminho.piggybank.model.Account;
 import com.gaminho.piggybank.model.Interest;
-import com.gaminho.piggybank.util.DateUtils;
-import com.gaminho.piggybank.util.ViewUtils;
-
-import java.time.LocalDateTime;
 
 import io.realm.Realm;
 import io.realm.exceptions.RealmPrimaryKeyConstraintException;
@@ -18,11 +14,6 @@ public final class DeleteAccountDialog extends DeletingDialog<Account> {
 
     public DeleteAccountDialog(Account item, Context context, DeletingDialogListener listener) {
         super(item, context, listener);
-    }
-
-    @Override
-    protected int getTitleStringResId() {
-        return R.string.delete;
     }
 
     @Override
