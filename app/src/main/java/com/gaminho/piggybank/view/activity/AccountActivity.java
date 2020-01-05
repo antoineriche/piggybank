@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -15,6 +16,8 @@ import com.gaminho.piggybank.model.Account;
 import com.gaminho.piggybank.model.Interest;
 import com.gaminho.piggybank.view.dialog.adding.AddInterestDialog;
 import com.gaminho.piggybank.view.dialog.adding.AddingDialog;
+import com.gaminho.piggybank.view.dialog.deleting.DeleteInterestDialog;
+import com.gaminho.piggybank.view.dialog.deleting.DeletingDialog;
 
 import java.util.List;
 
@@ -22,7 +25,7 @@ import io.realm.Realm;
 import io.realm.Sort;
 
 public class AccountActivity extends AppCompatActivity implements View.OnClickListener,
-        RVInterestAdapter.OnInterestClickListener, AddingDialog.AddingDialogListener<Interest> {
+        RVInterestAdapter.OnInterestClickListener, AddingDialog.AddingDialogListener<Interest>, DeletingDialog.DeletingDialogListener {
 
     public static final String INTENT_ACCOUNT_UID_PARAM = "account-uid";
     private Account mAccount;
@@ -78,7 +81,7 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onInterestClick(int position, View v) {
-
+        new DeleteInterestDialog(mInterestList.get(position), this, this).show();
     }
 
     @Override
@@ -89,6 +92,11 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onItemAdded(Interest item) {
         this.mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onItemDeleted() {
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override

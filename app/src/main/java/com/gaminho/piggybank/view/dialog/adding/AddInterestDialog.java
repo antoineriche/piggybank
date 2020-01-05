@@ -18,6 +18,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.UUID;
 
 import io.realm.Realm;
 import io.realm.exceptions.RealmPrimaryKeyConstraintException;
@@ -28,7 +29,7 @@ public class AddInterestDialog extends AddingDialog<Interest> {
     private LocalDate mLocalDate;
     private Account mAccount;
 
-    public AddInterestDialog(Context context, Account account, AddingDialogListener listener) {
+    public AddInterestDialog(Context context, Account account, AddingDialogListener<Interest> listener) {
         super(context, listener);
         this.mAccount = account;
         this.mLocalDate = null;
@@ -66,6 +67,7 @@ public class AddInterestDialog extends AddingDialog<Interest> {
         final Interest interest = new Interest();
         interest.setAmount(ViewUtils.readDoubleFromEditText(mETInterestAmount));
         interest.setAccount(mAccount);
+        interest.setUid(UUID.randomUUID().toString());
         interest.setAccountAmount(ViewUtils.readDoubleFromEditText(mETInterestAccountAmount));
         interest.setDate(mLocalDate.atStartOfDay());
         return interest;

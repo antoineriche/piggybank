@@ -14,7 +14,7 @@ public class AddAccountDialog extends AddingDialog<Account> {
 
     private EditText mETAccountLabel, mETAccountAmount;
 
-    public AddAccountDialog(Context context, AddingDialogListener listener) {
+    public AddAccountDialog(Context context, AddingDialogListener<Account> listener) {
         super(context, listener);
     }
 

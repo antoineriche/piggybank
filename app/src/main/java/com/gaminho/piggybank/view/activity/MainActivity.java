@@ -13,6 +13,8 @@ import com.gaminho.piggybank.adapter.RVAccountAdapter;
 import com.gaminho.piggybank.model.Account;
 import com.gaminho.piggybank.view.dialog.adding.AddAccountDialog;
 import com.gaminho.piggybank.view.dialog.adding.AddingDialog;
+import com.gaminho.piggybank.view.dialog.deleting.DeleteAccountDialog;
+import com.gaminho.piggybank.view.dialog.deleting.DeletingDialog;
 
 import java.util.List;
 
@@ -22,7 +24,7 @@ import io.realm.Realm;
 https://www.journaldev.com/23357/android-realm-database
  */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,
-        AddingDialog.AddingDialogListener<Account>, RVAccountAdapter.OnAccountClickListener {
+        AddingDialog.AddingDialogListener<Account>, RVAccountAdapter.OnAccountClickListener, DeletingDialog.DeletingDialogListener {
 
     private RVAccountAdapter mAdapter;
 
@@ -173,12 +175,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onAccountLongClick(int position, View v) {
-
+        new DeleteAccountDialog(mAccountList.get(position), this, this).show();
     }
 
     @Override
     public void onItemAdded(Account item) {
         this.mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onItemDeleted() {
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override

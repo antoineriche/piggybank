@@ -1,11 +1,16 @@
 <resources>
     <string name="app_name">Piggy Bank</string>
     <string name="save">Save</string>
+    <string name="delete">Delete</string>
     <string name="cancel">Cancel</string>
     <string name="missing_info">Some info are missing</string>
+
     <string name="new_account">New Account</string>
-    <string name="new_interest">New Interest</string>
-    <string name="unknown_account">Unknown account</string>
-    <string name="add_interest">Add interest</string>
     <string name="add_account">Add account</string>
+    <string name="delete_account">Would you really like to delete this account?</string>
+    <string name="unknown_account">Unknown account</string>
+
+    <string name="new_interest">New Interest</string>
+    <string name="add_interest">Add interest</string>
+    <string name="delete_interest">Would you really like to delete this interest?</string>
 </resources>

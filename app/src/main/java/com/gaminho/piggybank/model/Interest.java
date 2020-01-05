@@ -6,6 +6,8 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 import io.realm.RealmObject;
+import io.realm.annotations.Index;
+import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 
 public class Interest extends RealmObject {
@@ -16,6 +18,9 @@ public class Interest extends RealmObject {
     public static final String PROPERTY_ACCOUNT = "mAccount";
     public static final String PROPERTY_DATE = "mDate";
 
+    @PrimaryKey
+    @Index
+    private String mUid;
 
     private double mAmount;
 
@@ -24,15 +29,26 @@ public class Interest extends RealmObject {
     private Account mAccount;
 
     @Required
+    @Index
     private Date mDate;
 
     public Interest() {
     }
 
-    public Interest(double amount, Account account, Date localDate) {
+    public Interest(String uid, double amount, double accountAmount, Account account, Date date) {
+        mUid = uid;
         mAmount = amount;
+        mAccountAmount = accountAmount;
         mAccount = account;
-        mDate = localDate;
+        mDate = date;
+    }
+
+    public String getUid() {
+        return mUid;
+    }
+
+    public void setUid(String uid) {
+        mUid = uid;
     }
 
     public double getAmount() {

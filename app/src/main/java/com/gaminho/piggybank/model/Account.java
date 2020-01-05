@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import io.realm.RealmObject;
+import io.realm.annotations.Index;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 
@@ -15,6 +16,7 @@ public class Account extends RealmObject implements Serializable {
     public static final String PROPERTY_LAST_UPDATE = "mLastUpdate";
 
     @PrimaryKey
+    @Index
     private String mUid;
 
     @Required
