@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gaminho.piggybank.R;
@@ -20,6 +19,7 @@ import com.gaminho.piggybank.view.dialog.adding.AddingDialog;
 import java.util.List;
 
 import io.realm.Realm;
+import io.realm.Sort;
 
 public class AccountActivity extends AppCompatActivity implements View.OnClickListener,
         RVInterestAdapter.OnInterestClickListener, AddingDialog.AddingDialogListener<Interest> {
@@ -28,7 +28,6 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
     private Account mAccount;
     private List<Interest> mInterestList;
 
-    private TextView mTVAccountLabel;
     private RVInterestAdapter mAdapter;
 
     @Override
@@ -36,16 +35,15 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
 
-        mTVAccountLabel = findViewById(R.id.tv_interest_account_label);
-
         Realm realm = Realm.getDefaultInstance();
         getAccount(getIntent(), realm);
 
         findViewById(R.id.btn_new_interest).setOnClickListener(this);
 
-        mInterestList = realm.where(Interest.class).findAll();
+        mInterestList = realm.where(Interest.class).equalTo("mAccount.mUid", mAccount.getUid())
+                .findAllSorted(Interest.PROPERTY_DATE, Sort.DESCENDING);
 
-        RecyclerView recyclerView = findViewById(R.id.rv_interests);
+        final RecyclerView recyclerView = findViewById(R.id.rv_interests);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new RVInterestAdapter(mInterestList);
@@ -59,14 +57,14 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
             realm.executeTransaction(realm1 -> {
                 mAccount = realm1.where(Account.class).equalTo(Account.PROPERTY_UID, uid).findFirst();
                 if (mAccount == null) {
-                    Toast.makeText(getApplicationContext(), "Unknown account", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.unknown_account, Toast.LENGTH_SHORT).show();
                     onDestroy();
                 } else {
-                    mTVAccountLabel.setText(mAccount.getLabel());
+                    setTitle(mAccount.getLabel());
                 }
             });
         } else {
-            Toast.makeText(getApplicationContext(), "Unknown account", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), R.string.unknown_account, Toast.LENGTH_SHORT).show();
             onDestroy();
         }
     }
