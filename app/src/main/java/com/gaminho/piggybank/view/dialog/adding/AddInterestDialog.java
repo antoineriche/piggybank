@@ -98,7 +98,7 @@ public final class AddInterestDialog extends AddingDialog<Interest> {
                     calendar1.set(Calendar.MONTH, monthOfYear);
                     calendar1.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                     mLocalDate =  DateUtils.toLocalDate(calendar1.getTime());
-                    mETInterestDate.setText(Formatter.dateToString(mLocalDate, Format.DATE_DD_MM_YYYY));
+                    mETInterestDate.setText(Formatter.dateToString(mLocalDate, Format.DATE_YYYY_MM_DD));
                 },
                 calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)
         ).show();
