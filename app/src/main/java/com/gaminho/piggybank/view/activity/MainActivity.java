@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -15,8 +16,10 @@ import com.gaminho.piggybank.view.dialog.adding.AddAccountDialog;
 import com.gaminho.piggybank.view.dialog.adding.AddingDialog;
 import com.gaminho.piggybank.view.dialog.deleting.DeleteAccountDialog;
 import com.gaminho.piggybank.view.dialog.deleting.DeletingDialog;
+import com.gaminho.piggybank.view.dialog.viewing.AccountAsJSONDialog;
 
 import java.util.List;
+import java.util.stream.IntStream;
 
 import io.realm.Realm;
 
@@ -24,7 +27,10 @@ import io.realm.Realm;
 https://www.journaldev.com/23357/android-realm-database
  */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,
-        AddingDialog.AddingDialogListener<Account>, RVAccountAdapter.OnAccountClickListener, DeletingDialog.DeletingDialogListener {
+        AddingDialog.AddingDialogListener<Account>,
+        RVAccountAdapter.OnAccountClickListener,
+        DeletingDialog.DeletingDialogListener,
+        AccountAsJSONDialog.SaveListener {
 
     private RVAccountAdapter mAdapter;
 
@@ -37,9 +43,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        findViewById(R.id.btn_new_account).setOnClickListener(this);
-
-        findViewById(R.id.btn_raz).setOnClickListener(this);
+        IntStream.of(R.id.btn_new_account, R.id.btn_raz, R.id.btn_account_as_json)
+                .mapToObj(this::findViewById)
+                .forEach(v -> ((View) v).setOnClickListener(this));
 
         mRealm = Realm.getDefaultInstance();
 
@@ -70,6 +76,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn_new_account:
                 new AddAccountDialog(this, this).show();
+                break;
+            case R.id.btn_account_as_json:
+                if (!mAccountList.isEmpty()) {
+                    new AccountAsJSONDialog<Account>(this, mAccountList.get(0), this).show();
+                }
                 break;
         }
     }
@@ -191,5 +202,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onAddingItemFailed(String errorMsg) {
         Toast.makeText(getApplicationContext(), "Error:\n" + errorMsg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onSaveItem() {
+        Log.e("Saving account", "big up");
+        Toast.makeText(this, "Not implemented yet", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onCancel() {
+        Log.e("Cancelling account", "big down");
     }
 }

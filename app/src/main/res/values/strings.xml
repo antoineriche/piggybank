@@ -7,6 +7,7 @@
 
     <string name="new_account">New Account</string>
     <string name="add_account">Add account</string>
+    <string name="account_to_json">To JSON</string>
     <string name="delete_account">Would you really like to delete this account?</string>
     <string name="unknown_account">Unknown account</string>
 
