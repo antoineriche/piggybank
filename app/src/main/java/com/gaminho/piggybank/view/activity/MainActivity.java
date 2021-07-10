@@ -206,7 +206,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onSaveItem() {
-        Log.e("Saving account", "big up");
         Toast.makeText(this, "Not implemented yet", Toast.LENGTH_SHORT).show();
     }
 

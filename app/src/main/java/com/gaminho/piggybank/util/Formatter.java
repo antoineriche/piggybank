@@ -1,5 +1,7 @@
 package com.gaminho.piggybank.util;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -7,6 +9,8 @@ import java.util.Date;
 import java.util.Locale;
 
 public final class Formatter {
+
+    private static final DecimalFormat DECIMAL_FORMAT = buildDecimalFormat();
 
     public static String dateToString(final LocalDate localDate, final Format format){
         return dateToString(localDate.atStartOfDay(), format);
@@ -21,10 +25,21 @@ public final class Formatter {
     }
 
     public static String formatDouble(final double valueToFormat){
-        return String.format(Locale.FRANCE, "%.02f", valueToFormat);
+        return DECIMAL_FORMAT.format(valueToFormat);
     }
 
     public static String formatAmount(final double valueToFormat){
         return formatDouble(valueToFormat).concat(" €");
+    }
+
+    private static DecimalFormat buildDecimalFormat() {
+        final DecimalFormat nf = new DecimalFormat("###########0.00");
+        final DecimalFormatSymbols customSymbol = new DecimalFormatSymbols();
+        customSymbol.setDecimalSeparator('.');
+        customSymbol.setGroupingSeparator(' ');
+        nf.setGroupingSize(3);
+        nf.setDecimalFormatSymbols(customSymbol);
+        nf.setGroupingUsed(true);
+        return nf;
     }
 }
